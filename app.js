@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/test', (req, res) => {
-    console.log("테스트로 들어왔어요!");
+    console.log("테스트로 들어왔어요오오오오오!!!!!!!!");
     res.send('Hello, test!');
   });
 
