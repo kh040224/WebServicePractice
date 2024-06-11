@@ -17,6 +17,18 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 // 기본 포트를 설정하거나 3000 포트를 사용합니다.
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+  if (req.method === 'OPTIONS') {
+      res.sendStatus(200);
+  } else {
+      next();
+  }
+});
+
 // 로깅 미들웨어
 const logginMiddleware =(req, res, next) => {
   console.log(`${req.method} ${req.url}`);
@@ -106,7 +118,7 @@ app.post('/token/login', (req, res) => {
   const user = users.find(user => user.id === id && user.pwd === pwd);
   if (user) {
     const token = jwt.sign({ id: user.id, name: user.name }, JWT_SECRET_KEY, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, userName:user.name });
   } else {
     res.status(401).send('로그인 실패');
   }
