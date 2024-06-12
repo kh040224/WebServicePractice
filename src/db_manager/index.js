@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-const { users_data } = require
+const { users_data } = require('./make_dummy')
 
 const sequelize = new Sequelize('webservice', 'root', '1234', {
   host: 'localhost',
